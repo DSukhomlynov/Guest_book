@@ -7,6 +7,7 @@
 3.Создать бд в базе<br>
 4.Выполнить yii migrate<br>
 5.Выполнить yii migrate/up --migrationPath=@vendor/costa-rico/yii2-images/migrations<br>
+6.Если не добавляются изображения, добавить по адресу web/upload папку global и store. Всего должно быть 3:cache, global, store. Я поправлю этот баг.
 
 
 Требования:
