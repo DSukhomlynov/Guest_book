@@ -4,7 +4,7 @@
 Установка:<br>
 1.Развернуть на своем localhost клонируя репозиторий<br>
 2.Обновить в composer с помощью - composer update<br>
-3.Создать бд в базе<br>
+3.Создать бд в базе и указать параметры подключения в config/db<br>
 4.Выполнить yii migrate<br>
 5.Выполнить yii migrate/up --migrationPath=@vendor/costa-rico/yii2-images/migrations<br>
 
