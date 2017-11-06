@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `records`.
  */
-class m171105_184146_create_records_table extends Migration
+class m171105_184146_create_likes_table extends Migration
 {
     /**
      * @inheritdoc
