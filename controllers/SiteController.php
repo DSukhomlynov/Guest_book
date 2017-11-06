@@ -24,7 +24,7 @@ class SiteController extends Controller
     {
         $likes = new Likes();
         $entry = new Records();
-        $user = Yii::$app->request->userIP;//Получаем ip пользователя
+        $user_ip = Yii::$app->request->userIP;//Получаем ip пользователя
         $entryLikes = Likes::find()->all();//Выборка данных таблицы likes
         $sample = Records::find()->orderBy(['date' => SORT_DESC]);//Формирование пагинации начало
         $pages = new Pagination(['totalCount' => $sample->count(), 'pageSize' => 2, 'forcePageParam' => false, 'pageSizeParam' => false]);
@@ -36,7 +36,7 @@ class SiteController extends Controller
             }
             if($entry->validate() && $entry->save()){//При успешном добавлении записи
                 $likes->post_id = $entry->id;//В таблицу likes добавляется запись с текущего ip для добавленной записи
-                $likes->user_ip = $user;//
+                $likes->user_ip = $user_ip;//
                 $likes->save();
                 $entry->gallery = UploadedFile::getInstances($entry, 'gallery');//Обработка изображений
                 if( $entry->gallery ){
@@ -46,40 +46,38 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('index', compact('pages', 'records', 'entry', 'user', 'entryLikes'));
+        return $this->render('index', compact('pages', 'records', 'entry', 'user_ip', 'entryLikes'));
     }
 
     public function actionLikes($id){
         $likes = new Likes();
         $entry = new Records();
-        $user = Yii::$app->request->userIP;//Получение ip юзера
-        $entryLikes = Likes::find()->where(['post_id' => $id])->all();//Записи в таблице likes для текущего сообщения
+        $user_ip = Yii::$app->request->userIP;//Получение ip юзера
+        $entryLike = Likes::find()->where(['post_id' => $id, 'user_ip' => $user_ip])->one();//Выборка записи заданного юзера по заданному ip
         $entryAllLikes = Records::findOne($id);//Запись(сообщение) в таблице records
-
-        foreach ($entryLikes as $like) //Перебор всех ip по заданной записи
+        if($entryLike != NULL) //Проверка на наличие
         {
-            if(($like->user_ip) == $user){//Если текущий user был зарегистрирован
-                if($like->status == 0){//То проверяется статус лайка. Если - нет, то лайкается
-                    $like->status = 1;
-                    $like->save();
-                    $entryAllLikes->likes += 1;
-                    $entryAllLikes->save();
-                    return $this->redirect(['/']);
-                } elseif($like->status == 1){ //Если - да, то дизлайкается
-                    $like->status = 0;
-                    $like->save();
-                    $entryAllLikes->likes -= 1;
-                    $entryAllLikes->save();
-                    return $this->redirect(['/']);
-                }
+            if($entryLike->status == 0){//Проверяется статус лайка. Если - нет, то лайкается
+                $entryLike->status = 1;
+                $entryLike->save();
+                $entryAllLikes->likes += 1;
+                $entryAllLikes->save();
+                return $this->redirect(['/']);
+            } elseif($entryLike->status == 1){ //Если - да, то дизлайкается
+                $entryLike->status = 0;
+                $entryLike->save();
+                $entryAllLikes->likes -= 1;
+                $entryAllLikes->save();
+                return $this->redirect(['/']);
             }
-        }//Если user не найден, то регистрируется новый и сохраняется со статусом-лайкнуто
-        $likes->post_id = $id;
-        $likes->user_ip = $user;
-        $likes->status = 1;
-        $likes->save();
-        $entryAllLikes->likes += 1;
-        $entryAllLikes->save();
+        } else {//Если user не найден, то регистрируется новый и сохраняется со статусом-лайкнуто
+            $likes->post_id = $id;
+            $likes->user_ip = $user_ip;
+            $likes->status = 1;
+            $likes->save();
+            $entryAllLikes->likes += 1;
+            $entryAllLikes->save();
+        }
         return $this->redirect(['/']);
     }
 

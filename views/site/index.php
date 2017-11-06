@@ -75,7 +75,7 @@ use yii\helpers\Url;
 						<?php
                         foreach ($entryLikes as $like):
 	                        if ($like->post_id == $record->id){
-	                        	if ($like->user_ip == $user){
+	                        	if ($like->user_ip == $user_ip){
 	                        		if($like->status == 1){
                                         echo 'С этого ip лайк стоит!';
 			                        } elseif ($like->status == 0){
