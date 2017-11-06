@@ -26,7 +26,7 @@ class SiteController extends Controller
         $entry = new Records();
         $user = Yii::$app->request->userIP;//Получаем ip пользователя
         $entryLikes = Likes::find()->all();//Выборка данных таблицы likes
-        $sample = Records::find();;//Формирование пагинации начало
+        $sample = Records::find()->orderBy(['date' => SORT_DESC]);;//Формирование пагинации начало
         $pages = new Pagination(['totalCount' => $sample->count(), 'pageSize' => 2, 'forcePageParam' => false, 'pageSizeParam' => false]);
         $records = $sample->offset($pages->offset)->limit($pages->limit)->all();//конец
         if ($entry->load(Yii::$app->request->post())) {//Если кнопка добавить на форме нажата
