@@ -42,17 +42,9 @@ use yii\widgets\Pjax;
 		</div>
 		<div class="row animate-in" data-anim-type="fade-in-up">
 			<div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-2 scroll-me">
-				<p >
-					Ссылки на различные сервисы(если успею запилить)
-				</p>
-				<div class="social">
-					<a href="#" class="btn button-custom btn-custom-one" ><i class="fa fa-facebook "></i></a>
-					<a href="#" class="btn button-custom btn-custom-one" ><i class="fa fa-twitter"></i></a>
-					<a href="#" class="btn button-custom btn-custom-one" ><i class="fa fa-google-plus "></i></a>
-					<a href="#" class="btn button-custom btn-custom-one" ><i class="fa fa-linkedin "></i></a>
-					<a href="#" class="btn button-custom btn-custom-one" ><i class="fa fa-pinterest "></i></a>
-					<a href="#" class="btn button-custom btn-custom-one" ><i class="fa fa-github "></i></a>
-				</div>
+				<h4>
+					Для просмотра результатов работы перейдите по ссылке!
+				</h4><br><br>
 				<a href="#records" class=" btn button-custom btn-custom-two">Перейти к реализации</a>
 			</div>
 		</div>
@@ -114,21 +106,6 @@ use yii\widgets\Pjax;
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
 				<div class="add-wrapper">
 					<h2>Добавление записи</h2>
-					<!--					<form role="form">-->
-					<!--						<div class="form-group">-->
-					<!--							<label for="email"><h3>Name:</h3></label>-->
-					<!--							<input type="email" class="form-control" id="email" placeholder="Введите email">-->
-					<!--						</div>-->
-					<!--						<div class="form-group">-->
-					<!--							<label for="pass"><h3>Text:</h3></label>-->
-					<!--							<textarea class="form-control" id="email" placeholder="Введите email"></textarea>-->
-					<!--						</div>-->
-					<!--						<div class="form-group">-->
-					<!--							<label for="pass"><h3>Link:</h3></label>-->
-					<!--							<input type="password" class="form-control" id="pass" placeholder="Пароль">-->
-					<!--						</div>-->
-					<!--						<button type="submit" class="btn button-custom btn-custom-two">Отправить</button>-->
-					<!--					</form>-->
                     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
                     <?= $form->field($entry, 'author') ?>
                     <?= $form->field($entry, 'content') ?>
@@ -179,7 +156,7 @@ use yii\widgets\Pjax;
 					<h4>85611, Дачное , </h4>
 					<h4>Украина</h4>
 					<div class="footer-div" >
-						&copy; 2017 YourDomain
+						&copy; 2017 Test work
 					</div>
 				</div>
 			</div>

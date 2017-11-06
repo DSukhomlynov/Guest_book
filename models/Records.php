@@ -49,6 +49,7 @@ class Records extends ActiveRecord
             [['date'], 'safe'],
             [['likes'], 'integer'],
             [['author', 'link'], 'string', 'max' => 255],
+            ['link', 'url', 'defaultScheme' => 'http'],
             [['image'], 'file', 'extensions' => 'png, jpg'],
             [['gallery'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 255],
         ];
