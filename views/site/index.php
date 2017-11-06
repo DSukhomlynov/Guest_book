@@ -3,6 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 ?>
 
 <!--MENU SECTION END-->
@@ -70,17 +71,34 @@ use yii\widgets\Pjax;
 					<hr>
 					<p>Link:<a href=<?= $record->link ?>>&nbsp;Ссылка на сайт</a></p>
 					<p>Likes:<?= $record->likes ?></p>
+					<p>
+						<?php
+                        foreach ($entryLikes as $like):
+	                        if ($like->post_id == $record->id){
+	                        	if ($like->user_ip == $user){
+	                        		if($like->status == 1){
+                                        echo 'С этого ip лайк стоит!';
+			                        } elseif ($like->status == 0){
+                                        echo 'С текущего ip лайка нет!';
+			                        }
+		                        }
+	                        }
+	                        $id_post = $record->id;
+                        endforeach;
+						?>
+					</p>
+					<p><a href=<?= Url::toRoute(['/site/likes', 'id' => $id_post]) ?>>Поставить/снять лайк</a></p>
 					<p><?php
                         $images = $record->getImages();
 					    foreach ($images as $image):
 						echo Html::img($image->getUrl('150x150'));
-					    endforeach
+					    endforeach;
 						?>
 					</p>
 				</div>
 			</div>
 		</div>
-        <?php endforeach ?>
+        <?php endforeach; ?>
 		<div class="row animate-in" data-anim-type="fade-in-up">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
 		<?php
