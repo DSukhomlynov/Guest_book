@@ -24,21 +24,21 @@ class SiteController extends Controller
     {
         $likes = new Likes();
         $entry = new Records();
-        $user = Yii::$app->request->userIP;
-        $entryLikes = Likes::find()->all();
-        $sample = Records::find();;
+        $user = Yii::$app->request->userIP;//Получаем ip пользователя
+        $entryLikes = Likes::find()->all();//Выборка данных таблицы likes
+        $sample = Records::find();;//Формирование пагинации начало
         $pages = new Pagination(['totalCount' => $sample->count(), 'pageSize' => 2, 'forcePageParam' => false, 'pageSizeParam' => false]);
-        $records = $sample->offset($pages->offset)->limit($pages->limit)->all();
-        if ($entry->load(Yii::$app->request->post())) {
-            if($_POST['Records']['link'] == NULL)
+        $records = $sample->offset($pages->offset)->limit($pages->limit)->all();//конец
+        if ($entry->load(Yii::$app->request->post())) {//Если кнопка добавить на форме нажата
+            if($_POST['Records']['link'] == NULL)//Если ссылка осталась пуста, подставляется заглушка
             {
                 $entry->link = 'https://www.google.ru/';
             }
-            if($entry->validate() && $entry->save()){
-                $likes->post_id = $entry->id;
-                $likes->user_ip = $user;
+            if($entry->validate() && $entry->save()){//При успешном добавлении записи
+                $likes->post_id = $entry->id;//В таблицу likes добавляется запись с текущего ip для добавленной записи
+                $likes->user_ip = $user;//
                 $likes->save();
-                $entry->gallery = UploadedFile::getInstances($entry, 'gallery');
+                $entry->gallery = UploadedFile::getInstances($entry, 'gallery');//Обработка изображений
                 if( $entry->gallery ){
                     $entry->uploadGallery();
                 }
@@ -52,20 +52,20 @@ class SiteController extends Controller
     public function actionLikes($id){
         $likes = new Likes();
         $entry = new Records();
-        $user = Yii::$app->request->userIP;
-        $entryLikes = Likes::find()->where(['post_id' => $id])->all();
-        $entryAllLikes = Records::findOne($id);
+        $user = Yii::$app->request->userIP;//Получение ip юзера
+        $entryLikes = Likes::find()->where(['post_id' => $id])->all();//Записи в таблице likes для текущего сообщения
+        $entryAllLikes = Records::findOne($id);//Запись(сообщение) в таблице records
 
-        foreach ($entryLikes as $like)
+        foreach ($entryLikes as $like) //Перебор всех ip по заданной записи
         {
-            if(($like->user_ip) == $user){
-                if($like->status == 0){
+            if(($like->user_ip) == $user){//Если текущий user был зарегистрирован
+                if($like->status == 0){//То проверяется статус лайка. Если - нет, то лайкается
                     $like->status = 1;
                     $like->save();
                     $entryAllLikes->likes += 1;
                     $entryAllLikes->save();
                     return $this->redirect(['/']);
-                } elseif($like->status == 1){
+                } elseif($like->status == 1){ //Если - да, то дизлайкается
                     $like->status = 0;
                     $like->save();
                     $entryAllLikes->likes -= 1;
@@ -73,12 +73,13 @@ class SiteController extends Controller
                     return $this->redirect(['/']);
                 }
             }
-        }
+        }//Если user не найден, то регистрируется новый и сохраняется со статусом-лайкнуто
         $likes->post_id = $id;
         $likes->user_ip = $user;
         $likes->status = 1;
         $likes->save();
-
+        $entryAllLikes->likes += 1;
+        $entryAllLikes->save();
         return $this->redirect(['/']);
     }
 
