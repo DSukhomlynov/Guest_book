@@ -16,7 +16,7 @@ class m171105_184145_create_records_table extends Migration
             'id' => $this->primaryKey(),
             'author' => $this->string(),
             'content' => $this->text(),
-            'date' => $this->timestamp(),
+            'date' => $this->timestamp()->defaultValue(null),
             'link' => $this->string(),
             'likes' => $this->integer()->defaultValue(0),
         ]);
