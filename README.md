@@ -5,8 +5,9 @@
 1.Развернуть на своем localhost клонируя репозиторий<br>
 2.Обновить в composer с помощью - composer update<br>
 3.Создать бд в базе и указать параметры подключения в config/db(По умолчанию название бд - guest_book)<br>
-4.Выполнить yii migrate<br>
-5.Выполнить yii migrate/up --migrationPath=@vendor/costa-rico/yii2-images/migrations<br>
+4.В таблице records удалить в поле date аттрибут ON UPDATE CURRENT_TIMESTAMP, иначе будет по нажатию лайка обновлятся дата<br>
+5.Выполнить yii migrate<br>
+6.Выполнить yii migrate/up --migrationPath=@vendor/costa-rico/yii2-images/migrations<br>
 
 Требования:<br>
 -Гостевая книга работает без аутентификации и авторизации<br>
