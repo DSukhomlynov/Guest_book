@@ -63,7 +63,7 @@ use yii\helpers\Url;
 		</div>
         <?php foreach ($records as $record): ?>
 			<div class="row animate-in" data-anim-type="fade-in-up">
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="records-wrapper">
 						<h3><?= $record->author ?><h4>(<?= $record->date ?>)</h4></h3>
 						<hr>
@@ -89,7 +89,7 @@ use yii\helpers\Url;
 			</div>
         <?php endforeach; ?>
 		<div class="row animate-in" data-anim-type="fade-in-up">
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <?php
                 echo LinkPager::widget([
                     'pagination' => $pages,
