@@ -61,51 +61,38 @@ use yii\helpers\Url;
 				<hr />
 			</div>
 		</div>
-		<?php foreach ($records as $record): ?>
-		<div class="row animate-in" data-anim-type="fade-in-up">
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
-				<div class="records-wrapper">
-					<h3><?= $record->author ?><h4>(<?= $record->date ?>)</h4></h3>
-					<hr>
-					<?= $record->content ?>
-					<hr>
-					<p>Link:<a href=<?= $record->link ?>>&nbsp;Ссылка на сайт</a></p>
-					<p>Likes:<?= $record->likes ?></p>
-					<p>
-						<?php
-                        foreach ($entryLikes as $like):
-	                        if ($like->post_id == $record->id){
-	                        	if ($like->user_ip == $user_ip){
-	                        		if($like->status == 1){
-                                        echo 'С этого ip лайк стоит!';
-			                        } elseif ($like->status == 0){
-                                        echo 'С текущего ip лайка нет!';
-			                        }
-		                        }
-	                        }
-	                        $id_post = $record->id;
-                        endforeach;
-						?>
-					</p>
-					<p><a href=<?= Url::toRoute(['/site/likes', 'id' => $id_post]) ?>>Поставить/снять лайк</a></p>
-					<p><?php
-                        $images = $record->getImages();
-					    foreach ($images as $image):
-						echo Html::img($image->getUrl('150x150'));
-					    endforeach;
-						?>
-					</p>
+        <?php foreach ($records as $record): ?>
+			<div class="row animate-in" data-anim-type="fade-in-up">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
+					<div class="records-wrapper">
+						<h3><?= $record->author ?><h4>(<?= $record->date ?>)</h4></h3>
+						<hr>
+                        <?= $record->content ?>
+						<hr>
+						<p>Link:<a href=<?= $record->link ?>>&nbsp;Ссылка на сайт</a></p>
+						<p>Likes:<span id="count_<?= $record->id ?>"><?= $record->likes ?></span></p>
+						<p>
+
+						</p>
+                        <?= Html::submitButton('Like', ['id' => 'likeButton_' . $record->id, 'class' => 'btn btn-lg glyphicon glyphicon-heart slow-left-spinner ' . ($record->isLiked() ? 'liked' : '' ), 'onclick' => 'like('. $record->id .'); ']) ?>
+						<p><?php
+                            $images = $record->getImages();
+                            foreach ($images as $image):
+                                echo Html::img($image->getUrl('150x150'));
+                            endforeach;
+                            ?>
+						</p>
+					</div>
 				</div>
 			</div>
-		</div>
         <?php endforeach; ?>
 		<div class="row animate-in" data-anim-type="fade-in-up">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-12">
-		<?php
-        echo LinkPager::widget([
-            'pagination' => $pages,
-        ]);
-		?>
+                <?php
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                ]);
+                ?>
 			</div>
 		</div>
 	</div>

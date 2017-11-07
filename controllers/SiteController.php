@@ -49,36 +49,38 @@ class SiteController extends Controller
         return $this->render('index', compact('pages', 'records', 'entry', 'user_ip', 'entryLikes'));
     }
 
-    public function actionLikes($id){
-        $likes = new Likes();
-        $entry = new Records();
-        $user_ip = Yii::$app->request->userIP;//Получение ip юзера
-        $entryLike = Likes::find()->where(['post_id' => $id, 'user_ip' => $user_ip])->one();//Выборка записи заданного юзера по заданному ip
-        $entryAllLikes = Records::findOne($id);//Запись(сообщение) в таблице records
-        if($entryLike != NULL) //Проверка на наличие
-        {
-            if($entryLike->status == 0){//Проверяется статус лайка. Если - нет, то лайкается
-                $entryLike->status = 1;
-                $entryLike->save();
+    public function actionLikes($id)
+    {
+        if (Yii::$app->request->isAjax) {
+            $likes = new Likes();
+            $user_ip = Yii::$app->request->userIP;//Получение ip юзера
+            $entryLike = Likes::find()->where(['post_id' => $id, 'user_ip' => $user_ip])->one();//Выборка записи заданного юзера по заданному ip
+            $entryAllLikes = Records::findOne($id);//Запись(сообщение) в таблице records
+            if ($entryLike != NULL) //Проверка на наличие
+            {
+                if ($entryLike->status == 0) {//Проверяется статус лайка. Если - нет, то лайкается
+                    $entryLike->status = 1;
+                    $entryLike->save();
+                    $entryAllLikes->likes += 1;
+                    $entryAllLikes->save();
+                } elseif ($entryLike->status == 1) { //Если - да, то дизлайкается
+                    $entryLike->status = 0;
+                    $entryLike->save();
+                    $entryAllLikes->likes -= 1;
+                    $entryAllLikes->save();
+                }
+
+            } else {//Если user не найден, то регистрируется новый и сохраняется со статусом-лайкнуто
+                $likes->post_id = $id;
+                $likes->user_ip = $user_ip;
+                $likes->status = 1;
+                $likes->save();
                 $entryAllLikes->likes += 1;
                 $entryAllLikes->save();
-                return $this->redirect(['/']);
-            } elseif($entryLike->status == 1){ //Если - да, то дизлайкается
-                $entryLike->status = 0;
-                $entryLike->save();
-                $entryAllLikes->likes -= 1;
-                $entryAllLikes->save();
-                return $this->redirect(['/']);
             }
-        } else {//Если user не найден, то регистрируется новый и сохраняется со статусом-лайкнуто
-            $likes->post_id = $id;
-            $likes->user_ip = $user_ip;
-            $likes->status = 1;
-            $likes->save();
-            $entryAllLikes->likes += 1;
-            $entryAllLikes->save();
         }
-        return $this->redirect(['/']);
+
+
     }
 
 }

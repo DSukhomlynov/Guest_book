@@ -93,6 +93,10 @@ color: #fff;
 background-color: transparent;
 }
 
+.btn{
+color:#00003B;
+}
+
 
 /* =============================================================
 MENU SECTION STYLES
@@ -470,4 +474,8 @@ font-size:10px;
 
 color:#fff;
 text-decoration:none;
+}
+
+.liked {
+    background-color: #EA0000;
 }

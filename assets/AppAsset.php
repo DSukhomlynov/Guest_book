@@ -39,6 +39,7 @@ class AppAsset extends AssetBundle
         "js/appear.min.js",
         "js/animations.min.js",
         "js/custom.js",
+        "js/main.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',
