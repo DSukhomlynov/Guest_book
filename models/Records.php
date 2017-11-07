@@ -99,6 +99,6 @@ class Records extends ActiveRecord
 
     public function isLiked(){
         $user_ip = Yii::$app->request->userIP;//Получение ip юзера
-       return (Likes::find()->where(['post_id' => $this->id, 'user_ip' => $user_ip])->one()) ? true : false;//Выборка записи заданного юзера по задан
+        return (Likes::find()->where(['post_id' => $this->id, 'user_ip' => $user_ip, 'status' => 1])->one()) ? true : false;//Выборка записи заданного юзера по задан
     }
 }

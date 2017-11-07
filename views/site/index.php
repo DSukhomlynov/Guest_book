@@ -74,7 +74,9 @@ use yii\helpers\Url;
 						<p>
 
 						</p>
+						<p>
                         <?= Html::submitButton('Like', ['id' => 'likeButton_' . $record->id, 'class' => 'btn btn-lg glyphicon glyphicon-heart slow-left-spinner ' . ($record->isLiked() ? 'liked' : '' ), 'onclick' => 'like('. $record->id .'); ']) ?>
+						</p>
 						<p><?php
                             $images = $record->getImages();
                             foreach ($images as $image):
