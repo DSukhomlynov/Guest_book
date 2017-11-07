@@ -27,6 +27,7 @@ class m171105_184145_create_records_table extends Migration
                           Отстраненный Мадридом экс-глава правительства Каталонии Карлес Пучдемон и четверо экс-министров 
                           добровольно сдались полиции Бельгии. Об этом сообщают местные СМИ в воскресенье, 5 ноября.',
             'link' => 'https://www.linkedin.com/in/dmytro-sukhomlynov/',
+            'likes' => '1',
         ]);
 
         $this->insert('records', [
@@ -36,6 +37,7 @@ class m171105_184145_create_records_table extends Migration
                           для Федеральной разведывательной службы Германии (BND).
                           Об этом сообщают газеты медиагруппы Redaktionsnetzwerk Deutschland со ссылкой на источники.',
             'link' => 'https://www.linkedin.com/in/simon-lee-0b3587149/',
+            'likes' => '0',
         ]);
 
         $this->insert('records', [
@@ -44,6 +46,7 @@ class m171105_184145_create_records_table extends Migration
                           По информации местных СМИ, сначала запрет будет введен временно - на 20 дней. 
                           Власти Афганистана объясняют подобный шаг необходимостью борьбы с террористами.',
             'link' => 'https://www.linkedin.com/in/olya-titarenko/',
+            'likes' => '1',
         ]);
     }
 
